@@ -188,6 +188,7 @@ func getDsn(dbType string, rw string) string {
 
 	switch strings.ToLower(dbType) {
 	case SUPPORTED_DB_DRIVER_MYSQL:
+		// ?parseTime=True&loc=Local will use local timezone instead of us east +8
 		return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local",
 			detail.User, detail.Password, detail.Host, detail.Port, detail.DataBase, detail.Charset)
 	}
