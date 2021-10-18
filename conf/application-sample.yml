@@ -1,0 +1,105 @@
+App:
+  Env: dev # Including dev, prod
+  Server:
+    Port: "xxx"
+    AllowCrossDomain: true # cors
+
+Logs:
+  FiberLogOutput: "/storage/logs/xxx1.log"
+  AppLogOutput: "/storage/logs/xxx2.log"
+  OutputFormat: "json"
+  TimePrecision: "millisecond"
+  MaxSize: 10 # Mb, if the size is more than this one, zap will automatically slice log
+  MaxBackups: 7 # days
+  MaxAge: 15 # days
+  Compress: false
+
+Redis:
+  Address: localhost:6379
+  Username: xxx
+  Password: xxx
+  DBIndex: 0
+  PoolSize: 5
+  DialTimeout: 0
+  ReadTimeout: 0
+  WriteTimeout: 0
+  PoolTimeout: 0
+  IdleTimeout: 0
+  MaxRetries: 0
+  MinRetryBackoff: 0
+  MaxRetryBackoff: 0
+  IdleCheckFrequency: 0
+
+SnowFlake:
+  MachineId: 1 # If we deploy multiple apps as cluster, we have to fill this will different number
+
+Casbinv2: # api security
+  InitStartup: false
+  AutoLoadPolicySeconds: 5
+  TablePrefix: "xxx" # casbin will generate a full table name with underline between table prefix and table name
+  TableName: "xxx"
+  ModelConfig: |
+
+Encryptor:
+  RsaPub:
+  RsaPubHash:
+  RsaPriv:
+  RsaPrivHash:
+
+Websocket:
+  HubEnable: false
+  RwBufferSize: 20480
+  MaxMsgBytesSize: 65535
+  PingPeriodSecond: 20
+  MaxHeartbeatFailCount: 4
+  ReadDeadlineSecond: 100
+  WriteDeadlineSecond: 35
+
+Gormv2:
+  # Works for MySQL and MariaDB
+  MySQL:
+    # When the project is loaded and value is true, this configuration item will let project init a global variable
+    # (*gorm.Db) to operate database. If you have correctly to set the database connection info, please set is as true.
+    IsInitDBStartup: true
+    SlowThreshold: 30 # slow SQL execution time threshold, if the duration is more than this value will trigger the system log record
+    IsRWSplittingEnable: false # If true, the Read section will be applied
+    Write:
+      Host: "192.168.1.111"
+      Port: 3306
+      DataBase: "xxx"
+      TablePrefix: "xxx_"
+      User: "xxx"
+      Password: "xxx"
+      Charset: "utf8"
+      SetMaxIdleConns: 10
+      SetMaxOpenConns: 128
+      SetConnMaxLiveTime: 60
+      # ReconnectInterval: 1
+      # PingFailRetryTimes: 3
+    Read:
+      Host: "127.0.0.1"
+      Port: 3308 # The port number must be different to Write port
+      DataBase: "xxx"
+      TablePrefix: "xxx_"
+      User: "xxx"
+      Password: "xxx"
+      Chartset: "utf8"
+      SetMaxIdleConns: 10
+      SetMaxOpenConns: 128
+      SetConnMaxLiveTime: 60
+
+Elastic:
+  Urls:
+    - "http://localhost:9200"
+  Auth:
+    Username: "xxx"
+    Secret: "xxx"
+  EnableGzip: true
+  HealthCheckInterval: 10
+  MaxRetries: 5
+
+Captcha:
+  lib: fontlib.txt
+  mode: 3
+  min: 4
+  max: 9
