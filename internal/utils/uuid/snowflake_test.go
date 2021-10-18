@@ -5,5 +5,9 @@ import (
 )
 
 func Test_SnowFlakeUUIDGeneration(t *testing.T) {
-	t.Logf("%d\n", NewSnowFlake(0, 1, 0).GenerateId())
+	id := NewSnowFlake(0, 1, 0).GenerateId()
+	t.Logf("%d\n", id)
+	var idCpy uint
+	idCpy = uint(id)
+	t.Logf("%d\n", idCpy)
 }
