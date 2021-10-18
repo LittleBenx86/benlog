@@ -15,8 +15,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/pprof"
 )
 
-// InitUEHttpServer
-// The Gin framework should not enable the static resources mapping
 func InitUEHttpServer() *fiber.App {
 	userApp := fiber.New(fiber.Config{
 		ErrorHandler: response.DefaultErrorHandler,
