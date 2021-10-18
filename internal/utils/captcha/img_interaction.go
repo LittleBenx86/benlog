@@ -119,12 +119,12 @@ func sortByOrder(selectedItems []Item) []Item {
 
 func BuildChecksumRequired(unfilteredItems []Item) string {
 	// [font:order:x:y]
-	formatter := "[%s:%d:%d:%d]"
+	formatter := "[%s:%d]"
 	var builder strings.Builder
 	builder.Grow(50)
 	cpy := sortByOrder(filterBySelected(unfilteredItems))
 	for _, item := range cpy {
-		builder.WriteString(fmt.Sprintf(formatter, item.Font, item.ValidateOrder, item.Coordinate.X, item.Coordinate.Y))
+		builder.WriteString(fmt.Sprintf(formatter, item.Font, item.ValidateOrder))
 	}
 	return builder.String()
 }
