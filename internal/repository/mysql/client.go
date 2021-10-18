@@ -14,6 +14,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	gormLogger "gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 	"gorm.io/plugin/dbresolver"
 )
 
@@ -101,13 +102,17 @@ func getSqlDriver(dbType string, rwsMode bool) (*gorm.DB, error) {
 		SkipDefaultTransaction: true,
 		PrepareStmt:            true,
 		Logger:                 logInterceptor(dbType),
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix:   dbContext.Cfg.Write.TablePrefix, // read-write database's name prefix must be consistent
+			SingularTable: true,
+		},
 	})
 	if err != nil {
-		// gorm sql driver init failed
-		return nil, err
+		return nil, err // gorm sql driver init failed
 	}
 
-	// If the read-write splitting is enabled, the readonly database's resource, read and replicas should be configured
+	// TODO If the read-write splitting is enabled, the readonly database's resource,
+	// read and replicas should be configured
 	if rwsMode {
 		if dial, err := getDBDialect(dbType, "Read"); err != nil {
 			msg := fmt.Sprintf("%s, database type: %s", consts.ERRORS_DB_DIALECT_INIT_ERR, dbType)
