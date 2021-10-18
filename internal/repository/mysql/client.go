@@ -62,7 +62,7 @@ var (
 )
 
 const (
-	SUPPORTED_DB_DRIVER_TYPE = "mysql"
+	SUPPORTED_DB_DRIVER_MYSQL = "mysql"
 )
 
 func NewDBContext(cfg DBConfigParams, l *zap.Logger) {
@@ -140,7 +140,7 @@ func getSqlDriver(dbType string, rwsMode bool) (*gorm.DB, error) {
 			d.Statement.RaiseErrorOnNotFound = false
 		})
 
-	// Set conns pool for main connection
+	// Set connections pool for main connection
 	if rawDb, err := gormDb.DB(); err != nil {
 		return nil, err
 	} else {
@@ -167,8 +167,13 @@ func getDBDialect(dbType string, rw string) (gorm.Dialector, error) {
 	var dbDialect gorm.Dialector
 	dsn := getDsn(dbType, rw)
 	switch strings.ToLower(dbType) {
-	case SUPPORTED_DB_DRIVER_TYPE:
-		dbDialect = mysql.Open(dsn)
+	case SUPPORTED_DB_DRIVER_MYSQL:
+		dbDialect = mysql.New(mysql.Config{
+			DSN:                       dsn,
+			DontSupportRenameIndex:    true,
+			DontSupportRenameColumn:   true,
+			SkipInitializeWithVersion: false,
+		})
 	default:
 		return nil, errors.New(consts.ERRORS_DB_DRIVER_UNSUPPORTED)
 	}
@@ -182,7 +187,7 @@ func getDsn(dbType string, rw string) string {
 	}
 
 	switch strings.ToLower(dbType) {
-	case SUPPORTED_DB_DRIVER_TYPE:
+	case SUPPORTED_DB_DRIVER_MYSQL:
 		return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local",
 			detail.User, detail.Password, detail.Host, detail.Port, detail.DataBase, detail.Charset)
 	}
