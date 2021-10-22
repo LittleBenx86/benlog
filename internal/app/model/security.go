@@ -5,5 +5,6 @@ type Authority int
 const (
 	UNKNOWN_AUTHORITY Authority = 0
 	ADMINISTRATOR     Authority = 1
-	MEMBER            Authority = 2
+	METRICS_MEMBER    Authority = 2
+	ANONYMOUS         Authority = 3
 )

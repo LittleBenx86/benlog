@@ -34,11 +34,20 @@ SnowFlake:
   MachineId: 1 # If we deploy multiple apps as cluster, we have to fill this will different number
 
 Casbinv2: # api security
-  InitStartup: false
-  AutoLoadPolicySeconds: 5
+  Enable: true
+  LoadFromDB: true
+  AutoLoadPoliciesPeriod: 5 # s
   TablePrefix: "xxx" # casbin will generate a full table name with underline between table prefix and table name
   TableName: "xxx"
   ModelConfig: |
+    [request_definition]
+    [policy_definition]
+    [role_definition]
+    [policy_effect]
+    [matchers]
+  Policies:
+    - { ptype: "", v0: "", v1: "", v2: "", v3: "", v4: "", v5: "" }
+
 
 Encryptor:
   RsaPub:

@@ -13,7 +13,7 @@ const UE_Metrics_V1_URL_PRE = "/ue/v1/metrics"
 func UEV1MetricsGroups(app *fiber.App) *fiber.App {
 
 	metricsAllController := ue.NewMetricsController(ue.METRICS_ALL, dependencies.WithLogger(variables.Logger))
-	metricsNoAuthGroup := app.Group(UE_Metrics_V1_URL_PRE, middlewares.NoAuth)
+	metricsNoAuthGroup := app.Group(UE_Metrics_V1_URL_PRE, middlewares.Anonymous)
 	{
 		metricsNoAuthGroup.Get("", metricsAllController.Detail())
 		metricsNoAuthGroup.Get("/cpu", metricsAllController.Clone(ue.METRICS_APP_CPU).Detail())

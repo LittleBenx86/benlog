@@ -1,0 +1,4 @@
+p, anonymous, /ue/.*, GET, allow
+p, anonymous, /ue/.*/metrics(\/[1].*)*, GET, deny
+p, anonymous, /ue/.*/metrics, POST, allow
+p, anonymous, /ue/.*/metrics, (PUT)|(PATCH), deny

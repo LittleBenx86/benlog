@@ -8,7 +8,7 @@ import (
 const UE_RESUME_V1_URL_PRE = "/ue/author/info"
 
 func UEV1ResumeGroups(app *fiber.App) *fiber.App {
-	resumeNoAuthGroup := app.Group(UE_RESUME_V1_URL_PRE, middlewares.NoAuth)
+	resumeNoAuthGroup := app.Group(UE_RESUME_V1_URL_PRE, middlewares.Anonymous)
 	{
 		resumeNoAuthGroup.Post("")
 	}

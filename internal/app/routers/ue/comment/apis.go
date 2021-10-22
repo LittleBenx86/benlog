@@ -8,7 +8,7 @@ import (
 const UE_COMM_V1_URL_PRE = "/ue/v1/comm"
 
 func UEV1CommentGroups(app *fiber.App) *fiber.App {
-	apiGroup := app.Group(UE_COMM_V1_URL_PRE, middlewares.NoAuth)
+	apiGroup := app.Group(UE_COMM_V1_URL_PRE, middlewares.Anonymous)
 	{
 		apiGroup.Get("/:blogId")
 		apiGroup.Post("/:blogId")

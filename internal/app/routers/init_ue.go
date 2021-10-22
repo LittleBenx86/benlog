@@ -8,6 +8,7 @@ import (
 	"github.com/LittleBenx86/Benlog/internal/app/middlewares"
 	"github.com/LittleBenx86/Benlog/internal/app/response"
 	"github.com/LittleBenx86/Benlog/internal/app/routers/ue/metrics"
+	"github.com/LittleBenx86/Benlog/internal/app/routers/ue/token"
 	"github.com/LittleBenx86/Benlog/internal/global/variables"
 
 	"github.com/gofiber/fiber/v2"
@@ -61,6 +62,7 @@ func InitUEHttpServer() *fiber.App {
 	}
 
 	userApp = metrics.UEV1MetricsGroups(userApp)
+	userApp = token.UEV1TokenGroups(userApp)
 
 	return userApp
 }
